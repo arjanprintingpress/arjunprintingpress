@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+:root {
+  --brand-blue: #0098da;
+  --brand-blue-dark: #002244;
+  --ink: #101820;
+  --paper: #ffffff;
+  --paper-muted: #f6f8fa;
+  --accent-amber: #f2a71b;
+  --accent-pink: #e8447a;
+}
+
+@theme inline {
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-dark: var(--brand-blue-dark);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-paper-muted: var(--paper-muted);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-pink: var(--accent-pink);
+  --font-heading: var(--font-poppins);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--paper-muted);
+  color: var(--ink);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
+}

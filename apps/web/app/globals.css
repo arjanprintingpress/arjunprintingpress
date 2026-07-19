@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --brand-blue: #0098da;
+  --brand-blue-dark: #002244;
+  --ink: #101820;
+  --paper: #ffffff;
+  --paper-muted: #f6f8fa;
+  --accent-amber: #f2a71b;
+  --accent-pink: #e8447a;
+}
+
+@theme inline {
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-dark: var(--brand-blue-dark);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-paper-muted: var(--paper-muted);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-pink: var(--accent-pink);
+  --font-heading: var(--font-poppins);
+  --font-sans: var(--font-inter);
+  --font-serif-accent: var(--font-fraunces);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
+}
+
+@keyframes logo-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes logo-glow {
+  0% { filter: drop-shadow(0 0 20px rgba(0, 152, 218, 0.6)) drop-shadow(0 0 40px rgba(0, 152, 218, 0.3)); }
+  100% { filter: drop-shadow(0 0 34px rgba(0, 152, 218, 0.9)) drop-shadow(0 0 68px rgba(0, 152, 218, 0.5)); }
+}
+
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes service-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.intro-logo-img {
+  animation: logo-float 3s ease-in-out infinite, logo-glow 2s ease-in-out infinite alternate;
+}
+
+.intro-ring {
+  animation: ring-spin 1.2s linear infinite;
+}
+
+.service-float {
+  animation: service-float 3s ease-in-out infinite;
+}
+
+.intro-ring::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  border-bottom-color: rgba(0, 152, 218, 0.35);
+  animation: ring-spin 2s linear infinite reverse;
+}
