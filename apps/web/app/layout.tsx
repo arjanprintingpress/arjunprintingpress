@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Poppins, Fraunces } from "next/font/google";
 import IntroSequence from "@/components/IntroSequence";
+import { SectionsProvider } from "@/components/SectionsProvider";
+import { getSections } from "@/lib/api";
 import "./globals.css";
 
 const inter = Inter({
@@ -28,19 +30,23 @@ export const metadata: Metadata = {
     "Printing services, mementoes, and corporate gifts from Arjun Printing Press.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const sections = await getSections();
+
   return (
     <html
       lang="en"
       className={`${inter.variable} ${poppins.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <IntroSequence />
-        {children}
+        <SectionsProvider sections={sections}>
+          <IntroSequence />
+          {children}
+        </SectionsProvider>
       </body>
     </html>
   );

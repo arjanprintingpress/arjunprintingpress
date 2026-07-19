@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { HeroSlide } from "@/content/sections";
+import type { HeroSlide } from "@/lib/api";
 
 const SLIDE_DURATION_MS = 6000;
 

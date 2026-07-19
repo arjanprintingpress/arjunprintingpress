@@ -1,23 +1,32 @@
-export type SectionSlug = "printing" | "mementoes" | "corporate-gifts";
+import "dotenv/config";
+import { prisma } from "../index";
 
-export type HeroSlide = {
-  image: string;
-  eyebrow: string;
-  heading: string;
-  headingAccent: string;
-  intro: string;
-};
-
-export type SectionContent = {
-  slug: SectionSlug;
+async function upsertSection(input: {
+  slug: "printing" | "mementoes" | "corporate_gifts";
   label: string;
   tagline: string;
-  heroSlides: HeroSlide[];
+  heroSlides: { image: string; eyebrow: string; heading: string; headingAccent: string; intro: string }[];
   services: { title: string; description: string }[];
-};
+}) {
+  const section = await prisma.section.upsert({
+    where: { slug: input.slug },
+    update: { label: input.label, tagline: input.tagline },
+    create: { slug: input.slug, label: input.label, tagline: input.tagline },
+  });
 
-export const sections: Record<SectionSlug, SectionContent> = {
-  printing: {
+  await prisma.heroSlide.deleteMany({ where: { sectionId: section.id } });
+  await prisma.heroSlide.createMany({
+    data: input.heroSlides.map((slide, order) => ({ ...slide, sectionId: section.id, order })),
+  });
+
+  await prisma.service.deleteMany({ where: { sectionId: section.id } });
+  await prisma.service.createMany({
+    data: input.services.map((service, order) => ({ ...service, sectionId: section.id, order })),
+  });
+}
+
+async function main() {
+  await upsertSection({
     slug: "printing",
     label: "Printing Services",
     tagline: "Offset, digital, and large-format printing since 1948.",
@@ -43,8 +52,9 @@ export const sections: Record<SectionSlug, SectionContent> = {
       { title: "Digital Printing", description: "Fast turnaround for short runs and proofs." },
       { title: "Large Format", description: "Banners, posters, and signage." },
     ],
-  },
-  mementoes: {
+  });
+
+  await upsertSection({
     slug: "mementoes",
     label: "Mementoes Services",
     tagline: "Custom mementoes and keepsakes for every occasion.",
@@ -61,9 +71,10 @@ export const sections: Record<SectionSlug, SectionContent> = {
       { title: "Trophies & Plaques", description: "Engraved awards for any occasion." },
       { title: "Custom Keepsakes", description: "Personalized mementoes and gifts." },
     ],
-  },
-  "corporate-gifts": {
-    slug: "corporate-gifts",
+  });
+
+  await upsertSection({
+    slug: "corporate_gifts",
     label: "Corporate Gifts",
     tagline: "Branded corporate gifting, done right.",
     heroSlides: [
@@ -79,7 +90,15 @@ export const sections: Record<SectionSlug, SectionContent> = {
       { title: "Branded Merchandise", description: "Custom-branded corporate gift sets." },
       { title: "Bulk Gifting", description: "Scalable gifting for events and teams." },
     ],
-  },
-};
+  });
 
-export const sectionList = Object.values(sections);
+  console.log("Seeded printing, mementoes, corporate_gifts sections.");
+}
+
+main()
+  .then(() => prisma.$disconnect())
+  .catch(async (err) => {
+    console.error(err);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@arjun/db": ["../../packages/db/index.ts"]
     }
   },
   "include": [

@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { sectionList } from "@/content/sections";
+import { sectionHref } from "@/lib/api";
+import { useSections } from "@/components/SectionsProvider";
 
 export default function Nav() {
   const pathname = usePathname();
+  const sections = useSections();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -45,8 +47,8 @@ export default function Nav() {
         </div>
 
         <ul className="hidden items-center gap-8 text-sm font-normal sm:flex">
-          {sectionList.map((section) => {
-            const href = `/${section.slug}`;
+          {sections.map((section) => {
+            const href = sectionHref(section);
             const active = pathname === href;
             return (
               <li key={section.slug}>

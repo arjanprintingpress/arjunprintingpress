@@ -1,6 +1,9 @@
+import { notFound } from "next/navigation";
 import SectionPage from "@/components/SectionPage";
-import { sections } from "@/content/sections";
+import { getSection } from "@/lib/api";
 
-export default function Home() {
-  return <SectionPage section={sections.printing} />;
+export default async function Home() {
+  const section = await getSection("printing");
+  if (!section) notFound();
+  return <SectionPage section={section} />;
 }

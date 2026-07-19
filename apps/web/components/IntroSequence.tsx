@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { sectionList, type SectionSlug } from "@/content/sections";
+import { sectionHref } from "@/lib/api";
+import { useSections } from "@/components/SectionsProvider";
 
 type Stage = "logo" | "year" | "options" | "done";
 
@@ -12,8 +13,9 @@ const SESSION_KEY = "app-intro-shown";
 
 export default function IntroSequence() {
   const router = useRouter();
+  const sections = useSections();
   const [stage, setStage] = useState<Stage>("done");
-  const [chosen, setChosen] = useState<SectionSlug | null>(null);
+  const [chosen, setChosen] = useState<string | null>(null);
 
   useEffect(() => {
     if (sessionStorage.getItem(SESSION_KEY)) return;
@@ -28,11 +30,11 @@ export default function IntroSequence() {
     };
   }, []);
 
-  function choose(slug: SectionSlug) {
+  function choose(slug: string, href: string) {
     setChosen(slug);
     setTimeout(() => {
       setStage("done");
-      router.push(`/${slug}`);
+      router.push(href);
     }, 700);
   }
 
@@ -88,10 +90,10 @@ export default function IntroSequence() {
               Choose Your Service
             </p>
             <div className="flex flex-wrap items-center justify-center gap-8">
-              {sectionList.map((section, i) => (
+              {sections.map((section, i) => (
                 <motion.button
                   key={section.slug}
-                  onClick={() => choose(section.slug)}
+                  onClick={() => choose(section.slug, sectionHref(section))}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{
                     opacity: 1,

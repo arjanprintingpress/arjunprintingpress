@@ -1,7 +1,14 @@
-import { prisma } from "@arjun/db";
+type Section = { id: string; slug: string; label: string };
+
+async function getSections(): Promise<Section[]> {
+  const res = await fetch(`${process.env.BACKEND_URL}/api/sections`, { cache: "no-store" });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.sections;
+}
 
 export default async function AdminDashboard() {
-  const sections = await prisma.section.findMany({ orderBy: { slug: "asc" } });
+  const sections = await getSections();
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-16">

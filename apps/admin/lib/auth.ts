@@ -1,4 +1,4 @@
-import { createHmac, timingSafeEqual } from "crypto";
+import { createHmac } from "crypto";
 
 const COOKIE_NAME = "app_admin_session";
 const MAX_AGE_SECONDS = 60 * 60 * 8; // 8h
@@ -11,21 +11,6 @@ function secret() {
 
 function sign(value: string) {
   return createHmac("sha256", secret()).update(value).digest("hex");
-}
-
-export function verifyCredentials(user: string, password: string) {
-  const expectedUser = process.env.ADMIN_USER ?? "";
-  const expectedHash = process.env.ADMIN_PASSWORD_HASH ?? "";
-  const passwordHash = createHmac("sha256", secret()).update(password).digest("hex");
-
-  const userOk =
-    user.length === expectedUser.length &&
-    timingSafeEqual(Buffer.from(user), Buffer.from(expectedUser));
-  const passOk =
-    passwordHash.length === expectedHash.length &&
-    timingSafeEqual(Buffer.from(passwordHash), Buffer.from(expectedHash));
-
-  return userOk && passOk;
 }
 
 export function createSessionCookie() {

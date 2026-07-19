@@ -1,8 +1,8 @@
 import Nav from "@/components/Nav";
 import HeroCarousel from "@/components/HeroCarousel";
-import type { SectionContent } from "@/content/sections";
+import type { Section } from "@/lib/api";
 
-export default function SectionPage({ section }: { section: SectionContent }) {
+export default function SectionPage({ section }: { section: Section }) {
   return (
     <>
       <Nav />
