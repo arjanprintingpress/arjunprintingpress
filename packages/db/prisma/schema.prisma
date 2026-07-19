@@ -30,13 +30,15 @@ model Section {
 }
 
 model HeroSlide {
-  id        String  @id @default(cuid())
-  section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  sectionId String
-  image     String
-  heading   String
-  subcopy   String
-  order     Int     @default(0)
+  id            String  @id @default(cuid())
+  section       Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId     String
+  image         String
+  eyebrow       String
+  heading       String
+  headingAccent String
+  intro         String
+  order         Int     @default(0)
 }
 
 model Service {
