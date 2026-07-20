@@ -20,7 +20,7 @@ export default function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
   }, [index, slides.length]);
 
   return (
-    <div className="relative h-screen w-full overflow-hidden bg-brand-blue-dark">
+    <div className="sticky top-0 z-0 h-screen w-full overflow-hidden bg-brand-blue-dark">
       <AnimatePresence mode="wait">
         <motion.div
           key={slide.image}
