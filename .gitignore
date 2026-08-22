@@ -44,3 +44,8 @@ ruvector.db
 next-env.d.ts
 
 **/generated/prisma
+
+# agent tooling artifacts
+.claude-flow/
+agentdb.rvf
+agentdb.rvf.lock

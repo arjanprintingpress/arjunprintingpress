@@ -1,82 +1,108 @@
-const FEATURES = [
-  {
-    title: "75+ Years Experience",
-    description: "Decades of expertise in the printing industry with a proven track record.",
-    icon: (
-      <>
-        <circle cx="16" cy="12" r="7" />
-        <path d="M11 18l-2 8 7-4 7 4-2-8" />
-      </>
-    ),
-  },
-  {
-    title: "Fast Turnaround",
-    description: "Quick delivery without compromising on quality and attention to detail.",
-    icon: (
-      <>
-        <circle cx="16" cy="16" r="12" />
-        <path d="M16 9v7l5 3" strokeLinecap="round" />
-      </>
-    ),
-  },
-  {
-    title: "Custom Design",
-    description: "Professional design services to match your brand and business requirements.",
-    icon: (
-      <>
-        <path d="M16 5a11 11 0 100 22c1.7 0 2-1 1.2-2-.7-.9-.2-2 1-2h2a4 4 0 004-4c0-7.7-3.9-14-8.2-14z" />
-        <circle cx="12" cy="14" r="1.2" fill="currentColor" stroke="none" />
-        <circle cx="17" cy="11" r="1.2" fill="currentColor" stroke="none" />
-        <circle cx="21" cy="15" r="1.2" fill="currentColor" stroke="none" />
-      </>
-    ),
-  },
-  {
-    title: "Quality Guarantee",
-    description: "100% satisfaction guarantee on all our printing services and products.",
-    icon: (
-      <>
-        <path d="M16 4l10 4v7c0 7-4.5 11.5-10 13-5.5-1.5-10-6-10-13V8z" />
-        <path d="M12 16l3 3 6-6" strokeLinecap="round" strokeLinejoin="round" />
-      </>
-    ),
-  },
-];
+"use client";
 
-export default function WhyChooseUs() {
+import { motion } from "framer-motion";
+import { Award, Clock, Palette, ShieldCheck, Truck, Star, Users, Heart, type LucideIcon } from "lucide-react";
+import type { WhyChooseContent } from "@/lib/api";
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  Award,
+  Clock,
+  Palette,
+  ShieldCheck,
+  Truck,
+  Star,
+  Users,
+  Heart,
+};
+
+function RegistrationMark({ className }: { className: string }) {
   return (
-    <section className="bg-paper-muted py-32">
-      <div className="mx-auto max-w-7xl px-6 text-center">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-amber">
-          Why Choose Us
-        </p>
-        <h2 className="mt-4 font-sans text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-          Why Choose Arjun Printing Press?
-        </h2>
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1"
+    >
+      <circle cx="12" cy="12" r="6" />
+      <path d="M12 0v24M0 12h24" />
+    </svg>
+  );
+}
 
-        <div className="mt-16 grid grid-cols-1 gap-8 text-left sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map((feature) => (
-            <div
-              key={feature.title}
-              className="rounded-2xl border border-black/5 bg-paper p-8 shadow-sm"
-            >
-              <svg
-                width="40"
-                height="40"
-                viewBox="0 0 32 32"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="text-ink"
+export default function WhyChooseUs({ data }: { data: WhyChooseContent }) {
+  const features = [...data.features].sort((a, b) => a.order - b.order);
+
+  return (
+    <section className="relative min-h-screen w-full overflow-hidden bg-ink py-28">
+      {/* halftone / press texture */}
+      <div className="halftone-bg pointer-events-none absolute inset-0 opacity-[0.15]" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink via-transparent to-ink" />
+
+      {/* registration / crop marks, printer's-plate motif */}
+      <RegistrationMark className="pointer-events-none absolute left-6 top-6 h-6 w-6 text-white/20 md:left-10 md:top-10" />
+      <RegistrationMark className="pointer-events-none absolute bottom-6 right-6 h-6 w-6 text-white/20 md:bottom-10 md:right-10" />
+      <span className="pointer-events-none absolute right-6 top-6 font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 md:right-10 md:top-10">
+        Plate 04 / CMYK
+      </span>
+
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 gap-16 px-6 lg:grid-cols-[minmax(0,320px)_1fr] lg:gap-24">
+        {/* left: sticky editorial heading */}
+        <motion.div
+          initial={{ opacity: 0, x: -16 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="lg:sticky lg:top-32 lg:self-start"
+        >
+          <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-accent-amber">
+            <span className="h-px w-8 bg-accent-amber" />
+            {data.eyebrow}
+          </p>
+          <h2 className="mt-6 font-heading text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl">
+            {data.headingPrefix}
+            <br />
+            <span className="font-serif-accent italic text-accent-amber">{data.headingAccent}</span>
+            {data.headingSuffix}
+          </h2>
+          <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/50">{data.intro}</p>
+        </motion.div>
+
+        {/* right: numbered editorial rows */}
+        <div className="border-t border-white/10">
+          {features.map((feature, i) => {
+            const Icon = ICON_MAP[feature.icon] ?? Award;
+            return (
+              <motion.div
+                key={feature.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.08 }}
+                className="group relative grid grid-cols-[auto_1fr_auto] items-center gap-6 border-b border-white/10 py-8 transition-colors hover:bg-white/[0.03] sm:py-10"
               >
-                {feature.icon}
-              </svg>
-              <h3 className="mt-6 font-heading text-xl font-semibold text-ink">
-                {feature.title}
-              </h3>
-              <p className="mt-3 text-base text-ink/70">{feature.description}</p>
-            </div>
-          ))}
+                <span className="font-serif-accent text-4xl italic text-white/15 transition-colors group-hover:text-accent-amber/60 sm:text-5xl">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                <div className="min-w-0">
+                  <h3 className="font-heading text-lg font-semibold text-white sm:text-xl">
+                    {feature.title}
+                  </h3>
+                  <p className="mt-2 max-w-md text-sm leading-relaxed text-white/50">
+                    {feature.description}
+                  </p>
+                </div>
+
+                <Icon
+                  strokeWidth={1.25}
+                  className="hidden h-[30px] w-[30px] shrink-0 text-white/25 transition-colors group-hover:text-accent-amber sm:block"
+                />
+
+                <span className="pointer-events-none absolute bottom-0 left-0 h-px w-0 bg-accent-amber transition-all duration-500 group-hover:w-full" />
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -2,11 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import type { HeroSlide } from "@/lib/api";
 
 const SLIDE_DURATION_MS = 6000;
 
-export default function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
+export default function HeroCarousel({
+  slides,
+  exploreHref,
+}: {
+  slides: HeroSlide[];
+  exploreHref: string;
+}) {
   const [index, setIndex] = useState(0);
   const slide = slides[index];
   const nextSlide = slides[(index + 1) % slides.length];
@@ -21,13 +28,13 @@ export default function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
 
   return (
     <div className="sticky top-0 z-0 h-screen w-full overflow-hidden bg-brand-blue-dark">
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         <motion.div
           key={slide.image}
-          initial={{ opacity: 0, scale: 1.05 }}
+          initial={{ opacity: 0, scale: 1.06 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.9, ease: "easeInOut" }}
+          exit={{ opacity: 0, scale: 1 }}
+          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${slide.image})` }}
         />
@@ -113,13 +120,13 @@ export default function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
             </motion.div>
           </AnimatePresence>
 
-          <a
-            href="#services"
+          <Link
+            href={exploreHref}
             className="mb-2 hidden shrink-0 items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white transition hover:text-accent-amber sm:flex"
           >
             Explore Now
             <span aria-hidden>→</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

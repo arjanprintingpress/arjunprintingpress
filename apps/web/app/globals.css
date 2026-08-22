@@ -47,9 +47,14 @@ h1, h2, h3, h4, h5, h6 {
   to { transform: rotate(360deg); }
 }
 
-@keyframes service-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+@keyframes intro-orb-drift-a {
+  0%, 100% { transform: translate(-10%, -10%) scale(1); }
+  50% { transform: translate(6%, 8%) scale(1.15); }
+}
+
+@keyframes intro-orb-drift-b {
+  0%, 100% { transform: translate(8%, 6%) scale(1); }
+  50% { transform: translate(-8%, -10%) scale(1.1); }
 }
 
 .intro-logo-img {
@@ -60,10 +65,6 @@ h1, h2, h3, h4, h5, h6 {
   animation: ring-spin 1.2s linear infinite;
 }
 
-.service-float {
-  animation: service-float 3s ease-in-out infinite;
-}
-
 .intro-ring::before {
   content: "";
   position: absolute;
@@ -72,4 +73,38 @@ h1, h2, h3, h4, h5, h6 {
   border: 2px solid transparent;
   border-bottom-color: rgba(0, 152, 218, 0.35);
   animation: ring-spin 2s linear infinite reverse;
+}
+
+.intro-orb-a {
+  animation: intro-orb-drift-a 16s ease-in-out infinite;
+}
+
+.intro-orb-b {
+  animation: intro-orb-drift-b 18s ease-in-out infinite;
+}
+
+.intro-dot-grid {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.halftone-bg {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-orb-a,
+  .intro-orb-b {
+    animation: none;
+  }
 }

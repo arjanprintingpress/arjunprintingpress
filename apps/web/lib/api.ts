@@ -17,6 +17,64 @@ export type ServiceItem = {
   order: number;
 };
 
+export type SubCategoryItem = {
+  id: string;
+  image: string;
+  title: string;
+  description: string;
+  order: number;
+};
+
+export type CategoryItem = {
+  id: string;
+  image: string;
+  title: string;
+  description: string;
+  order: number;
+  subCategories: SubCategoryItem[];
+};
+
+export type AboutStat = {
+  id: string;
+  value: string;
+  label: string;
+  order: number;
+};
+
+export type AboutImage = {
+  id: string;
+  url: string;
+  side: "left" | "right";
+  order: number;
+};
+
+export type AboutContent = {
+  id: string;
+  eyebrow: string;
+  heading: string;
+  body: string;
+  stats: AboutStat[];
+  images: AboutImage[];
+};
+
+export type WhyChooseFeature = {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+  order: number;
+};
+
+export type WhyChooseContent = {
+  id: string;
+  eyebrow: string;
+  headingPrefix: string;
+  headingAccent: string;
+  headingSuffix: string;
+  intro: string;
+  features: WhyChooseFeature[];
+};
+
 export type Section = {
   id: string;
   slug: string; // backend enum form, e.g. "corporate_gifts"
@@ -24,6 +82,9 @@ export type Section = {
   tagline: string;
   heroSlides: HeroSlide[];
   services: ServiceItem[];
+  categories: CategoryItem[];
+  about: AboutContent | null;
+  whyChooseUs: WhyChooseContent | null;
 };
 
 const ENUM_TO_URL: Record<string, SectionSlug> = {
@@ -61,3 +122,4 @@ export async function getSection(slug: SectionSlug): Promise<Section | null> {
     return null;
   }
 }
+

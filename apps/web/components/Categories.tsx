@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import type { CategoryItem } from "@/lib/api";
 
 const SLIDE_DURATION_MS = 4000;
 const HOVER_DELAY_MS = 150;
@@ -9,65 +12,14 @@ const TRANSITION_MS = 700;
 const ITEM_WIDTH = 260;
 const ITEM_GAP = 24;
 
-const CATEGORIES = [
-  {
-    slug: "visiting-cards",
-    title: "Visiting Cards",
-    description: "Sharp, professional cards that make the first impression count.",
-  },
-  {
-    slug: "letter-heads",
-    title: "Letter Heads",
-    description: "Branded stationery that carries your identity into every letter.",
-  },
-  {
-    slug: "bill-books",
-    title: "Bill Books",
-    description: "Durable, sequential bill books built for daily business use.",
-  },
-  {
-    slug: "wedding-cards",
-    title: "Wedding Cards",
-    description: "Elegant invitations for the biggest celebration on the calendar.",
-  },
-  {
-    slug: "customized-stamps",
-    title: "Customized Stamps",
-    description: "Precision rubber and self-inking stamps made to your spec.",
-  },
-  {
-    slug: "flyers",
-    title: "Flyers",
-    description: "Bold, printed flyers that get your message into people's hands.",
-  },
-  {
-    slug: "t-shirts-hoodies",
-    title: "T-Shirts & Hoodies",
-    description: "Custom apparel printing for teams, events, and brands.",
-  },
-  {
-    slug: "customized-calendars",
-    title: "Customized Calendars",
-    description: "Year-round branding that hangs on the wall, not in a drawer.",
-  },
-  {
-    slug: "labels-stickers",
-    title: "Labels & Stickers",
-    description: "Clean-cut labels and stickers for products and packaging.",
-  },
-  {
-    slug: "customized-stationery",
-    title: "Customized Stationery",
-    description: "Everyday office stationery, printed exactly how you need it.",
-  },
-  {
-    slug: "advertisement-boards-signage-42",
-    title: "Advertisement Boards",
-    description: "Signage and boards built to hold up outdoors and stand out.",
-  },
-];
-
-export default function Categories() {
+export default function Categories({
+  categories,
+  sectionSlug,
+}: {
+  categories: CategoryItem[];
+  sectionSlug: string;
+}) {
+  const router = useRouter();
   const [index, setIndex] = useState(0);
   const pausedRef = useRef(false);
   const isAnimatingRef = useRef(false);
@@ -85,14 +37,15 @@ export default function Categories() {
   };
 
   useEffect(() => {
+    if (categories.length < 2) return;
     const id = setTimeout(() => {
       if (!pausedRef.current) {
-        goTo((index + 1) % CATEGORIES.length);
+        goTo((index + 1) % categories.length);
       }
     }, SLIDE_DURATION_MS);
     return () => clearTimeout(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index]);
+  }, [index, categories.length]);
 
   const handleHoverStart = (i: number) => {
     if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
@@ -102,22 +55,36 @@ export default function Categories() {
     if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
   };
 
-  const active = CATEGORIES[index];
+  if (categories.length === 0) return null;
+
+  const active = categories[index];
   const trackOffset = -(index * (ITEM_WIDTH + ITEM_GAP)) - ITEM_WIDTH / 2;
 
   return (
     <section
+      id="categories"
       className="relative z-10 -mt-[100vh] flex h-screen w-full flex-col justify-center overflow-hidden bg-ink py-16"
       onMouseEnter={() => (pausedRef.current = true)}
       onMouseLeave={() => (pausedRef.current = false)}
     >
-      <div className="mx-auto w-full max-w-6xl px-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-amber">
-          Categories
-        </p>
-        <h2 className="mt-4 font-sans text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-          What we print.
-        </h2>
+      <div className="halftone-bg pointer-events-none absolute inset-0 opacity-[0.15]" />
+
+      <div className="relative mx-auto flex w-full max-w-6xl items-end justify-between px-6">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-amber">
+            Categories
+          </p>
+          <h2 className="mt-4 font-sans text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+            What we print.
+          </h2>
+        </div>
+        <Link
+          href={`/${sectionSlug}/categories`}
+          className="mb-2 hidden shrink-0 items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white transition hover:text-accent-amber sm:flex"
+        >
+          Explore more
+          <span aria-hidden>→</span>
+        </Link>
       </div>
 
       <div className="relative mt-12 h-[420px] w-full">
@@ -127,7 +94,7 @@ export default function Categories() {
           animate={{ x: trackOffset }}
           transition={{ duration: TRANSITION_MS / 1000, ease: "easeInOut" }}
         >
-          {CATEGORIES.map((category, i) => {
+          {categories.map((category, i) => {
             const distance = Math.abs(i - index);
             const isActive = distance === 0;
             const scale = isActive ? 1 : distance === 1 ? 0.82 : 0.68;
@@ -136,7 +103,7 @@ export default function Categories() {
 
             return (
               <motion.div
-                key={category.slug}
+                key={category.id}
                 className="relative shrink-0"
                 style={{ width: ITEM_WIDTH }}
                 animate={{ scale, opacity, height }}
@@ -144,17 +111,18 @@ export default function Categories() {
               >
                 <button
                   type="button"
-                  aria-label={`Show ${category.title}`}
+                  aria-label={isActive ? `View ${category.title}` : `Show ${category.title}`}
                   onMouseEnter={() => handleHoverStart(i)}
                   onMouseLeave={handleHoverEnd}
                   onFocus={() => handleHoverStart(i)}
+                  onClick={() =>
+                    isActive
+                      ? router.push(`/${sectionSlug}/categories/${category.id}`)
+                      : goTo(i)
+                  }
                   className="relative block h-full w-full cursor-pointer overflow-hidden"
                 >
-                  <img
-                    src={`https://picsum.photos/seed/${category.slug}/500/700`}
-                    alt={category.title}
-                    className="h-full w-full object-cover"
-                  />
+                  <img src={category.image} alt={category.title} className="h-full w-full object-cover" />
                 </button>
                 {isActive && (
                   <>
@@ -171,15 +139,21 @@ export default function Categories() {
       <div className="mx-auto mt-10 max-w-6xl px-6">
         <AnimatePresence mode="wait">
           <motion.div
-            key={active.slug}
+            key={active.id}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <p className="font-sans text-sm font-semibold uppercase tracking-wide text-white">
+            <Link
+              href={`/${sectionSlug}/categories/${active.id}`}
+              className="group inline-flex items-center gap-2 font-sans text-sm font-semibold uppercase tracking-wide text-white transition hover:text-accent-amber"
+            >
               {active.title}
-            </p>
+              <span aria-hidden className="transition group-hover:translate-x-1">
+                →
+              </span>
+            </Link>
             <p className="mt-1 max-w-md text-sm text-white/60">{active.description}</p>
           </motion.div>
         </AnimatePresence>

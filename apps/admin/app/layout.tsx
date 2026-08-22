@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter, Poppins, Fraunces } from "next/font/google";
+import Sidebar from "@/components/Sidebar";
+import { getSectionSubmissions, getSections, type SectionSlug } from "@/lib/api";
 import "./globals.css";
+
+const SECTION_SLUGS: SectionSlug[] = ["printing", "mementoes", "corporate-gifts"];
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const poppins = Poppins({
   variable: "--font-poppins",
   weight: ["600", "700"],
+  subsets: ["latin"],
+});
+
+// Section-picker headline accent only — matches the public site's IntroSequence.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  weight: ["500"],
+  style: ["italic"],
   subsets: ["latin"],
 });
 
@@ -15,10 +27,26 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const [sections, submissionsBySlug] = await Promise.all([
+    getSections(),
+    Promise.all(SECTION_SLUGS.map((slug) => getSectionSubmissions(slug))),
+  ]);
+  const unreadCounts = Object.fromEntries(
+    SECTION_SLUGS.map((slug, i) => [slug, submissionsBySlug[i].filter((s) => !s.read).length])
+  );
+
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable} h-full antialiased`}>
-      <body className="min-h-full">{children}</body>
+    <html
+      lang="en"
+      className={`${inter.variable} ${poppins.variable} ${fraunces.variable} h-full antialiased`}
+    >
+      <body className="h-screen overflow-hidden">
+        <div className="flex h-full">
+          <Sidebar sections={sections} unreadCounts={unreadCounts} />
+          <main className="flex-1 overflow-y-auto bg-paper-muted">{children}</main>
+        </div>
+      </body>
     </html>
   );
 }

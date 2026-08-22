@@ -20,6 +20,7 @@
   --color-accent-pink: var(--accent-pink);
   --font-heading: var(--font-poppins);
   --font-sans: var(--font-inter);
+  --font-serif-accent: var(--font-fraunces);
 }
 
 body {
@@ -30,4 +31,39 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
+}
+
+@keyframes intro-orb-drift-a {
+  0%, 100% { transform: translate(-10%, -10%) scale(1); }
+  50% { transform: translate(6%, 8%) scale(1.15); }
+}
+
+@keyframes intro-orb-drift-b {
+  0%, 100% { transform: translate(8%, 6%) scale(1); }
+  50% { transform: translate(-8%, -10%) scale(1.1); }
+}
+
+.intro-orb-a {
+  animation: intro-orb-drift-a 16s ease-in-out infinite;
+}
+
+.intro-orb-b {
+  animation: intro-orb-drift-b 18s ease-in-out infinite;
+}
+
+.intro-dot-grid {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.halftone-bg {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-orb-a,
+  .intro-orb-b {
+    animation: none;
+  }
 }
