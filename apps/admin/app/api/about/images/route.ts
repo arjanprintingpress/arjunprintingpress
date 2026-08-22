@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
   try {
     const image = await createAboutImage(slug, input);
-    revalidateTag("sections");
+    revalidateTag("sections", { expire: 0 });
     return NextResponse.json({ image }, { status: 201 });
   } catch (err) {
     return NextResponse.json(

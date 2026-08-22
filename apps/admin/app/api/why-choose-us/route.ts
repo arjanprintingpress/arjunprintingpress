@@ -8,7 +8,7 @@ export async function PATCH(req: Request) {
 
   try {
     const whyChooseUs = await updateWhyChooseContent(slug, input);
-    revalidateTag("sections");
+    revalidateTag("sections", { expire: 0 });
     return NextResponse.json({ whyChooseUs });
   } catch (err) {
     return NextResponse.json(

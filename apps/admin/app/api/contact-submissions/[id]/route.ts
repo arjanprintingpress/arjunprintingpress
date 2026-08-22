@@ -11,7 +11,7 @@ export async function PATCH(
 
   try {
     const submission = await updateContactSubmission(id, input);
-    revalidateTag("submissions");
+    revalidateTag("submissions", { expire: 0 });
     return NextResponse.json({ submission });
   } catch (err) {
     return NextResponse.json(
@@ -29,7 +29,7 @@ export async function DELETE(
 
   try {
     await deleteContactSubmission(id);
-    revalidateTag("submissions");
+    revalidateTag("submissions", { expire: 0 });
     return NextResponse.json({ ok: true });
   } catch (err) {
     return NextResponse.json(

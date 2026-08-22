@@ -11,7 +11,7 @@ export async function PATCH(
 
   try {
     const feature = await updateWhyChooseFeature(id, input);
-    revalidateTag("sections");
+    revalidateTag("sections", { expire: 0 });
     return NextResponse.json({ feature });
   } catch (err) {
     return NextResponse.json(
@@ -29,7 +29,7 @@ export async function DELETE(
 
   try {
     await deleteWhyChooseFeature(id);
-    revalidateTag("sections");
+    revalidateTag("sections", { expire: 0 });
     return NextResponse.json({ ok: true });
   } catch (err) {
     return NextResponse.json(

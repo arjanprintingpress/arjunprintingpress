@@ -11,7 +11,7 @@ export async function PATCH(
 
   try {
     const category = await updateCategory(id, input);
-    revalidateTag("sections");
+    revalidateTag("sections", { expire: 0 });
     return NextResponse.json({ category });
   } catch (err) {
     return NextResponse.json(
@@ -29,7 +29,7 @@ export async function DELETE(
 
   try {
     await deleteCategory(id);
-    revalidateTag("sections");
+    revalidateTag("sections", { expire: 0 });
     return NextResponse.json({ ok: true });
   } catch (err) {
     return NextResponse.json(

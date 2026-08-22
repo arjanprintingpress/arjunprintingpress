@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
   try {
     const category = await createCategory(slug, input);
-    revalidateTag("sections");
+    revalidateTag("sections", { expire: 0 });
     return NextResponse.json({ category }, { status: 201 });
   } catch (err) {
     return NextResponse.json(

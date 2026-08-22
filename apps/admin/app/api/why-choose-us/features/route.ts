@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
   try {
     const feature = await createWhyChooseFeature(slug, input);
-    revalidateTag("sections");
+    revalidateTag("sections", { expire: 0 });
     return NextResponse.json({ feature }, { status: 201 });
   } catch (err) {
     return NextResponse.json(

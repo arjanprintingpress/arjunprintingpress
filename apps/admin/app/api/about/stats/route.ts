@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
   try {
     const stat = await createAboutStat(slug, input);
-    revalidateTag("sections");
+    revalidateTag("sections", { expire: 0 });
     return NextResponse.json({ stat }, { status: 201 });
   } catch (err) {
     return NextResponse.json(

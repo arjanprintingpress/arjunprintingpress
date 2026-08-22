@@ -8,7 +8,7 @@ export async function PATCH(req: Request) {
 
   try {
     const about = await updateAboutContent(slug, input);
-    revalidateTag("sections");
+    revalidateTag("sections", { expire: 0 });
     return NextResponse.json({ about });
   } catch (err) {
     return NextResponse.json(
