@@ -87,15 +87,15 @@ export default function ContactSection({ sectionSlug }: { sectionSlug: SectionSl
   }
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-ink py-24">
+    <section id="contact" className="relative overflow-hidden bg-ink py-16 sm:py-24">
       <div className="halftone-bg pointer-events-none absolute inset-0 opacity-[0.15]" />
 
-      <div className="relative mx-auto max-w-6xl px-6">
-        <h2 className="text-center font-sans text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
+      <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10">
+        <h2 className="text-center font-sans text-3xl font-semibold tracking-tight text-white sm:text-5xl lg:text-7xl">
           Let&apos;s work together.
         </h2>
 
-        <div className="mt-14 grid grid-cols-1 gap-16 lg:grid-cols-[380px_1fr]">
+        <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-[380px_1fr] lg:gap-16">
           <div className="relative">
             <div className="space-y-4">
             <div className="border border-white/10 bg-white/5 p-6">

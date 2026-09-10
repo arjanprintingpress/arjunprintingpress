@@ -47,7 +47,7 @@ export default function AboutStatForm({ sectionSlug, stat, onDone }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div>
           <FieldLabel>Value</FieldLabel>
           <Input
@@ -69,7 +69,7 @@ export default function AboutStatForm({ sectionSlug, stat, onDone }: Props) {
           />
         </div>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-3">
         <label className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-gray-500">
           Order
           <Input
@@ -79,7 +79,7 @@ export default function AboutStatForm({ sectionSlug, stat, onDone }: Props) {
             className="w-16"
           />
         </label>
-        <Button type="submit" disabled={saving}>
+        <Button type="submit" className="w-full sm:w-auto" disabled={saving}>
           {saving ? "Saving…" : stat ? "Save changes" : "Add stat"}
         </Button>
         {onDone && (

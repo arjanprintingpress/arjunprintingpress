@@ -67,7 +67,7 @@ export default function AboutImageForm({ sectionSlug, image, defaultSide, onDone
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-3">
         {values.url ? (
           <img src={values.url} alt="" className="h-16 w-16 shrink-0 rounded-lg object-cover" />
         ) : (
@@ -95,7 +95,7 @@ export default function AboutImageForm({ sectionSlug, image, defaultSide, onDone
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-3">
         <div className="w-32">
           <FieldLabel>Side</FieldLabel>
           <Select value={values.side} onChange={(e) => set("side", e.target.value as "left" | "right")}>
@@ -114,8 +114,8 @@ export default function AboutImageForm({ sectionSlug, image, defaultSide, onDone
         </label>
       </div>
 
-      <div className="flex items-center gap-4">
-        <Button type="submit" disabled={saving || uploading}>
+      <div className="flex flex-wrap items-center gap-3">
+        <Button type="submit" className="w-full sm:w-auto" disabled={saving || uploading}>
           {saving ? "Saving…" : image ? "Save changes" : "Add image"}
         </Button>
         {onDone && (

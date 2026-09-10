@@ -16,7 +16,7 @@ export default function SectionPage({
     <>
       <Nav />
       {children ? (
-        <div className="relative h-[200vh]">
+        <div className="relative lg:h-[200svh]">
           <HeroCarousel slides={section.heroSlides} exploreHref={exploreHref} />
         </div>
       ) : (

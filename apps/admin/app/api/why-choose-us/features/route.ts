@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidateSections } from "@/lib/revalidate";
 import { createWhyChooseFeature, type WhyChooseFeatureInput, type SectionSlug } from "@/lib/api";
 
 export async function POST(req: Request) {
@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
   try {
     const feature = await createWhyChooseFeature(slug, input);
-    revalidateTag("sections", { expire: 0 });
+    await revalidateSections();
     return NextResponse.json({ feature }, { status: 201 });
   } catch (err) {
     return NextResponse.json(

@@ -27,7 +27,7 @@ export default function HeroCarousel({
   }, [index, slides.length]);
 
   return (
-    <div className="sticky top-0 z-0 h-screen w-full overflow-hidden bg-brand-blue-dark">
+    <div className="sticky top-0 z-0 h-[100svh] w-full overflow-hidden bg-brand-blue-dark">
       <AnimatePresence>
         <motion.div
           key={slide.image}
@@ -54,7 +54,7 @@ export default function HeroCarousel({
         </button>
       )}
 
-      <div className="relative flex h-full max-w-6xl flex-col justify-between px-6 pb-8 pt-28 mx-auto">
+      <div className="relative mx-auto flex h-full max-w-[1600px] flex-col justify-between px-4 pb-10 pt-24 sm:px-6 sm:pb-8 sm:pt-28 lg:px-10">
         <AnimatePresence mode="wait">
           <motion.p
             key={slide.intro}
@@ -99,7 +99,7 @@ export default function HeroCarousel({
           </div>
         )}
 
-        <div className="flex items-end justify-between gap-6">
+        <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-end sm:justify-between">
           <AnimatePresence mode="wait">
             <motion.div
               key={slide.heading}
@@ -111,7 +111,7 @@ export default function HeroCarousel({
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-amber">
                 {slide.eyebrow}
               </p>
-              <h1 className="mt-4 font-heading text-5xl font-semibold leading-[1.1] text-white sm:text-6xl lg:text-7xl">
+              <h1 className="mt-4 font-heading text-4xl font-semibold leading-[1.1] text-white sm:text-6xl lg:text-7xl">
                 <span className="block">{slide.heading}</span>
                 <span className="font-serif-accent block italic text-accent-amber">
                   {slide.headingAccent}
@@ -120,9 +120,10 @@ export default function HeroCarousel({
             </motion.div>
           </AnimatePresence>
 
+          {/* ponytail: one CTA element — full-width pill on mobile, inline link sm+ */}
           <Link
             href={exploreHref}
-            className="mb-2 hidden shrink-0 items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white transition hover:text-accent-amber sm:flex"
+            className="flex w-full min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:text-accent-amber sm:mb-2 sm:w-auto sm:border-0 sm:p-0"
           >
             Explore Now
             <span aria-hidden>→</span>

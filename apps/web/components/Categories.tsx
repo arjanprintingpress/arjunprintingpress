@@ -61,15 +61,60 @@ export default function Categories({
   const trackOffset = -(index * (ITEM_WIDTH + ITEM_GAP)) - ITEM_WIDTH / 2;
 
   return (
-    <section
-      id="categories"
-      className="relative z-10 -mt-[100vh] flex h-screen w-full flex-col justify-center overflow-hidden bg-ink py-16"
-      onMouseEnter={() => (pausedRef.current = true)}
-      onMouseLeave={() => (pausedRef.current = false)}
-    >
+    <section id="categories" className="relative z-10 bg-ink">
+      {/* Mobile / tablet: normal-flow swipe strip. ponytail: one #categories anchor, two layouts under it */}
+      <div className="lg:hidden">
+        <div className="halftone-bg pointer-events-none absolute inset-0 opacity-[0.15]" />
+        <div className="relative px-6 pt-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-amber">
+            Categories
+          </p>
+          <div className="mt-4 flex items-end justify-between gap-4">
+            <h2 className="font-sans text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              What we print.
+            </h2>
+            <Link
+              href={`/${sectionSlug}/categories`}
+              className="shrink-0 pb-1 text-sm font-semibold uppercase tracking-wide text-white transition hover:text-accent-amber"
+            >
+              All →
+            </Link>
+          </div>
+        </div>
+        <div className="no-scrollbar relative mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-16 [scroll-padding-left:1.5rem]">
+          {categories.map((category) => (
+            <Link
+              key={category.id}
+              href={`/${sectionSlug}/categories/${category.id}`}
+              className="w-[68vw] max-w-[260px] shrink-0 snap-start"
+            >
+              <div className="aspect-[3/4] w-full overflow-hidden">
+                <img
+                  src={category.image}
+                  alt={category.title}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <p className="mt-3 font-sans text-sm font-semibold uppercase tracking-wide text-white">
+                {category.title}
+              </p>
+              {category.description ? (
+                <p className="mt-1 line-clamp-2 text-sm text-white/50">{category.description}</p>
+              ) : null}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: pinned scroll-jack carousel — unchanged */}
+      <div
+        className="relative -mt-[100vh] hidden h-screen w-full flex-col justify-center overflow-hidden bg-ink py-16 lg:flex"
+        onMouseEnter={() => (pausedRef.current = true)}
+        onMouseLeave={() => (pausedRef.current = false)}
+      >
       <div className="halftone-bg pointer-events-none absolute inset-0 opacity-[0.15]" />
 
-      <div className="relative mx-auto flex w-full max-w-6xl items-end justify-between px-6">
+      <div className="relative mx-auto flex w-full max-w-[1600px] items-end justify-between px-4 sm:px-6 lg:px-10">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-amber">
             Categories
@@ -136,7 +181,7 @@ export default function Categories({
         </motion.div>
       </div>
 
-      <div className="mx-auto mt-10 max-w-6xl px-6">
+      <div className="mx-auto mt-10 max-w-[1600px] px-4 sm:px-6 lg:px-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={active.id}
@@ -157,6 +202,7 @@ export default function Categories({
             <p className="mt-1 max-w-md text-sm text-white/60">{active.description}</p>
           </motion.div>
         </AnimatePresence>
+      </div>
       </div>
     </section>
   );

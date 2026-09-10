@@ -134,7 +134,7 @@ export default function IntroSequence() {
                   : { opacity: 0, filter: "blur(12px)", y: 24, scale: 0.92 }
               }
               transition={{ duration: 1.1, delay: revealPhase >= 1 ? 0.5 : 0, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-6 font-heading text-2xl font-semibold tracking-[0.15em] text-white sm:text-3xl"
+              className="mt-6 font-heading text-xl font-semibold tracking-[0.1em] text-white sm:text-3xl sm:tracking-[0.15em]"
             >
               ARJUN PRINTING PRESS
             </motion.p>
@@ -147,7 +147,7 @@ export default function IntroSequence() {
                   : { opacity: 0, filter: "blur(12px)", y: 16 }
               }
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-3 text-xl font-extrabold tracking-[0.3em] text-white/80 [text-shadow:0_0_40px_rgba(0,152,218,0.8)]"
+              className="mt-3 text-lg font-extrabold tracking-[0.2em] text-white/80 [text-shadow:0_0_40px_rgba(0,152,218,0.8)] sm:text-xl sm:tracking-[0.3em]"
             >
               SINCE 1948
             </motion.div>

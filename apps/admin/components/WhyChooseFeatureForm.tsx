@@ -61,7 +61,7 @@ export default function WhyChooseFeatureForm({ sectionSlug, feature, onDone }: P
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div>
           <FieldLabel>Icon</FieldLabel>
           <Select value={values.icon} onChange={(e) => set("icon", e.target.value)}>
@@ -94,7 +94,7 @@ export default function WhyChooseFeatureForm({ sectionSlug, feature, onDone }: P
         />
       </div>
 
-      <div className="flex items-center gap-4 pt-1">
+      <div className="flex flex-wrap items-center gap-3 pt-1">
         <label className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-gray-500">
           Order
           <Input
@@ -104,7 +104,7 @@ export default function WhyChooseFeatureForm({ sectionSlug, feature, onDone }: P
             className="w-16"
           />
         </label>
-        <Button type="submit" disabled={saving}>
+        <Button type="submit" className="w-full sm:w-auto" disabled={saving}>
           {saving ? "Saving…" : feature ? "Save changes" : "Add feature"}
         </Button>
         {onDone && (

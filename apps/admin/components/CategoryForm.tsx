@@ -66,7 +66,7 @@ export default function CategoryForm({ sectionSlug, category, onDone }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-3">
         {values.image ? (
           <img src={values.image} alt="" className="h-16 w-16 shrink-0 rounded-lg object-cover" />
         ) : (
@@ -115,7 +115,7 @@ export default function CategoryForm({ sectionSlug, category, onDone }: Props) {
         />
       </div>
 
-      <div className="flex items-center gap-4 pt-1">
+      <div className="flex flex-wrap items-center gap-3 pt-1">
         <label className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-gray-500">
           Order
           <Input
@@ -125,7 +125,7 @@ export default function CategoryForm({ sectionSlug, category, onDone }: Props) {
             className="w-16"
           />
         </label>
-        <Button type="submit" disabled={saving || uploading}>
+        <Button type="submit" className="w-full sm:w-auto" disabled={saving || uploading}>
           {saving ? "Saving…" : category ? "Save changes" : "Add category"}
         </Button>
         {onDone && (

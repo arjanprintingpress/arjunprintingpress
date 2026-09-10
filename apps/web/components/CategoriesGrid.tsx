@@ -22,12 +22,12 @@ export default function CategoriesGrid({ section }: { section: Section }) {
   const base = sectionHref(section);
 
   return (
-    <section className="relative overflow-hidden bg-paper px-6 pb-28 pt-40 md:px-10">
+    <section className="relative overflow-hidden bg-paper px-4 pb-20 pt-28 sm:px-6 sm:pb-28 sm:pt-40 md:px-10">
       <div className="relative mx-auto max-w-[1600px]">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-amber">
           {section.label}
         </p>
-        <h1 className="mt-4 font-sans text-5xl font-semibold tracking-tight text-ink sm:text-6xl">
+        <h1 className="mt-4 font-sans text-3xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
           {lead} <span className="font-serif-accent italic text-accent-amber">{accent}</span>
         </h1>
 

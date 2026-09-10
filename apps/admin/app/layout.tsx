@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins, Fraunces } from "next/font/google";
-import Sidebar from "@/components/Sidebar";
+import AdminShell from "@/components/AdminShell";
 import { getSectionSubmissions, getSections, type SectionSlug } from "@/lib/api";
 import "./globals.css";
 
@@ -41,11 +41,10 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       lang="en"
       className={`${inter.variable} ${poppins.variable} ${fraunces.variable} h-full antialiased`}
     >
-      <body className="h-screen overflow-hidden">
-        <div className="flex h-full">
-          <Sidebar sections={sections} unreadCounts={unreadCounts} />
-          <main className="flex-1 overflow-y-auto bg-paper-muted">{children}</main>
-        </div>
+      <body className="min-h-screen md:h-screen md:overflow-hidden">
+        <AdminShell sections={sections} unreadCounts={unreadCounts}>
+          {children}
+        </AdminShell>
       </body>
     </html>
   );

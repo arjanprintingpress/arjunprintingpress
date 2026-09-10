@@ -33,6 +33,20 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 767px) {
+  input, select, textarea {
+    font-size: 16px; /* stop iOS zoom-on-focus */
+  }
+}
+
 @keyframes intro-orb-drift-a {
   0%, 100% { transform: translate(-10%, -10%) scale(1); }
   50% { transform: translate(6%, 8%) scale(1.15); }

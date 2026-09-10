@@ -68,10 +68,10 @@ export default function Nav({ light = false }: { light?: boolean }) {
             : "border-b border-white/15 bg-transparent"
       }`}
     >
-      <nav className="relative mx-auto flex max-w-[1600px] items-center px-10 py-7">
-        <Link href="/" className="flex items-center gap-3">
-          <Image src="/images/logo.png" alt="Arjun Printing Press" width={38} height={38} />
-          <span className={`font-heading text-base font-medium tracking-[0.08em] ${textColor}`}>
+      <nav className="relative mx-auto flex max-w-[1600px] items-center px-4 py-4 sm:px-6 sm:py-5 lg:px-10 lg:py-7">
+        <Link href="/" className="flex items-center gap-2 sm:gap-3">
+          <Image src="/images/logo.png" alt="Arjun Printing Press" width={38} height={38} className="h-9 w-9" />
+          <span className={`hidden font-heading text-sm font-medium tracking-[0.08em] min-[380px]:inline sm:text-base ${textColor}`}>
             ARJUN PRINTING PRESS
           </span>
         </Link>
@@ -124,7 +124,7 @@ export default function Nav({ light = false }: { light?: boolean }) {
               onClick={() => setMenuOpen(false)}
             />
             <motion.div
-              className="fixed right-0 top-0 z-50 flex h-full w-[320px] flex-col bg-brand-blue-dark px-8 py-6"
+              className="fixed right-0 top-0 z-50 flex h-full w-[min(320px,85vw)] flex-col overflow-y-auto bg-brand-blue-dark px-8 py-6"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -144,7 +144,35 @@ export default function Nav({ light = false }: { light?: boolean }) {
                 </svg>
               </button>
 
-              <ul className="mt-12 flex flex-col gap-8 text-lg font-normal">
+              <ul className="mt-12 flex flex-col gap-6 text-lg font-normal">
+                <li>
+                  <Link
+                    href={sectionRoot}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-paper transition-colors hover:text-accent-amber"
+                  >
+                    Home
+                  </Link>
+                </li>
+                {NAV_LINKS.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={onSectionRoot ? link.href : `${sectionRoot}${link.href}`}
+                      onClick={() => setMenuOpen(false)}
+                      className="text-paper transition-colors hover:text-accent-amber"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="my-7 h-px bg-white/15" />
+
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
+                Sections
+              </p>
+              <ul className="flex flex-col gap-6 text-lg font-normal">
                 {sections.map((section) => {
                   const href = sectionHref(section);
                   const active = pathname === href;

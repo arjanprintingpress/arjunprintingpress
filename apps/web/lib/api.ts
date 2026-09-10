@@ -100,7 +100,8 @@ export function sectionHref(section: Pick<Section, "slug">) {
 export async function getSections(): Promise<Section[]> {
   try {
     const res = await fetch(`${process.env.BACKEND_URL}/api/sections`, {
-      next: { revalidate: 60 },
+      cache: "force-cache",
+      next: { revalidate: 60, tags: ["sections"] },
     });
     if (!res.ok) return [];
     const data = await res.json();
@@ -113,7 +114,8 @@ export async function getSections(): Promise<Section[]> {
 export async function getSection(slug: SectionSlug): Promise<Section | null> {
   try {
     const res = await fetch(`${process.env.BACKEND_URL}/api/sections/${slug}`, {
-      next: { revalidate: 60 },
+      cache: "force-cache",
+      next: { revalidate: 60, tags: ["sections"] },
     });
     if (!res.ok) return null;
     const data = await res.json();

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidateSections } from "@/lib/revalidate";
 import { updateAboutContent, type AboutContentInput, type SectionSlug } from "@/lib/api";
 
 export async function PATCH(req: Request) {
@@ -8,7 +8,7 @@ export async function PATCH(req: Request) {
 
   try {
     const about = await updateAboutContent(slug, input);
-    revalidateTag("sections", { expire: 0 });
+    await revalidateSections();
     return NextResponse.json({ about });
   } catch (err) {
     return NextResponse.json(

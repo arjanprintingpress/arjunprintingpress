@@ -60,7 +60,7 @@ export default function SubmissionCard({
               <p className="font-heading font-semibold text-ink">{submission.name}</p>
               {!submission.read && <Badge variant="blue">New</Badge>}
             </div>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 break-words text-sm text-gray-500">
               {submission.email} · {submission.phone}
             </p>
           </div>
@@ -77,7 +77,7 @@ export default function SubmissionCard({
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-4 border-t border-gray-100 pt-4 text-sm">
+        <div className="mt-4 grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 text-sm sm:grid-cols-2">
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-gray-500">Service</p>
             <p className="mt-1 text-ink">{submission.serviceType}</p>

@@ -74,8 +74,8 @@ export default function AboutTextForm({
           rows={4}
         />
       </div>
-      <div className="flex items-center gap-4">
-        <Button type="submit" disabled={saving}>
+      <div className="flex flex-wrap items-center gap-3">
+        <Button type="submit" className="w-full sm:w-auto" disabled={saving}>
           {saving ? "Saving…" : "Save changes"}
         </Button>
       </div>

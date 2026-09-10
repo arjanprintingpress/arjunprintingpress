@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidateSections } from "@/lib/revalidate";
 import { deleteWhyChooseFeature, updateWhyChooseFeature, type WhyChooseFeatureInput } from "@/lib/api";
 
 export async function PATCH(
@@ -11,7 +11,7 @@ export async function PATCH(
 
   try {
     const feature = await updateWhyChooseFeature(id, input);
-    revalidateTag("sections", { expire: 0 });
+    await revalidateSections();
     return NextResponse.json({ feature });
   } catch (err) {
     return NextResponse.json(
@@ -29,7 +29,7 @@ export async function DELETE(
 
   try {
     await deleteWhyChooseFeature(id);
-    revalidateTag("sections", { expire: 0 });
+    await revalidateSections();
     return NextResponse.json({ ok: true });
   } catch (err) {
     return NextResponse.json(

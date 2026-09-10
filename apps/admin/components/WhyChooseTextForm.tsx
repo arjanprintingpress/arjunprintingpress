@@ -58,7 +58,7 @@ export default function WhyChooseTextForm({
           required
         />
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <div>
           <FieldLabel>Heading prefix</FieldLabel>
           <Input
@@ -96,8 +96,8 @@ export default function WhyChooseTextForm({
           rows={3}
         />
       </div>
-      <div className="flex items-center gap-4">
-        <Button type="submit" disabled={saving}>
+      <div className="flex flex-wrap items-center gap-3">
+        <Button type="submit" className="w-full sm:w-auto" disabled={saving}>
           {saving ? "Saving…" : "Save changes"}
         </Button>
       </div>

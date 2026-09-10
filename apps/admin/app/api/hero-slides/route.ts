@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidateSections } from "@/lib/revalidate";
 import { createHeroSlide, type HeroSlideInput, type SectionSlug } from "@/lib/api";
 
 export async function POST(req: Request) {
@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
   try {
     const slide = await createHeroSlide(slug, input);
-    revalidateTag("sections", { expire: 0 });
+    await revalidateSections();
     return NextResponse.json({ slide }, { status: 201 });
   } catch (err) {
     return NextResponse.json(

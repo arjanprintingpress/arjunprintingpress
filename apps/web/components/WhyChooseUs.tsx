@@ -34,7 +34,7 @@ export default function WhyChooseUs({ data }: { data: WhyChooseContent }) {
   const features = [...data.features].sort((a, b) => a.order - b.order);
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-ink py-28">
+    <section className="relative min-h-screen w-full overflow-hidden bg-ink py-16 sm:py-28">
       {/* halftone / press texture */}
       <div className="halftone-bg pointer-events-none absolute inset-0 opacity-[0.15]" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink via-transparent to-ink" />
@@ -46,7 +46,7 @@ export default function WhyChooseUs({ data }: { data: WhyChooseContent }) {
         Plate 04 / CMYK
       </span>
 
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 gap-16 px-6 lg:grid-cols-[minmax(0,320px)_1fr] lg:gap-24">
+      <div className="relative mx-auto grid max-w-[1600px] grid-cols-1 gap-16 px-4 sm:px-6 lg:grid-cols-[minmax(0,320px)_1fr] lg:gap-24 lg:px-10">
         {/* left: sticky editorial heading */}
         <motion.div
           initial={{ opacity: 0, x: -16 }}
