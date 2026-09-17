@@ -70,7 +70,7 @@ export default function Nav({ light = false }: { light?: boolean }) {
     >
       <nav className="relative mx-auto flex max-w-[1600px] items-center px-4 py-4 sm:px-6 sm:py-5 lg:px-10 lg:py-7">
         <Link href="/" className="flex items-center gap-2 sm:gap-3">
-          <Image src="/images/logo.png" alt="Arjun Printing Press" width={38} height={38} className="h-9 w-9" />
+          <Image src="/images/logo.png" alt="Arjun Printing Press" width={65} height={36} className="h-8 w-auto sm:h-9 lg:h-10" />
           <span className={`hidden font-heading text-sm font-medium tracking-[0.08em] min-[380px]:inline sm:text-base ${textColor}`}>
             ARJUN PRINTING PRESS
           </span>
