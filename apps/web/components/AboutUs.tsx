@@ -58,9 +58,7 @@ function MarqueeColumn({
   return (
     <div
       className={`absolute top-0 hidden h-full w-[260px] overflow-hidden lg:block xl:w-[320px] ${
-        side === "left"
-          ? "left-0 lg:left-[max(0px,calc(50%-800px))]"
-          : "right-0 lg:right-[max(0px,calc(50%-800px))]"
+        side === "left" ? "left-0" : "right-0"
       }`}
       style={{
         maskImage:

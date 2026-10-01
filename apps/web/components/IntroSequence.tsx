@@ -68,6 +68,16 @@ export default function IntroSequence() {
     return () => timers.forEach(clearTimeout);
   }, []);
 
+  // Lock page scroll behind the overlay (iOS ignores fixed-overlay alone).
+  useEffect(() => {
+    if (stage === "done") return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [stage]);
+
   function choose(slug: string, href: string) {
     setChosen(slug);
     setTimeout(() => {
@@ -89,7 +99,7 @@ export default function IntroSequence() {
   if (stage === "done") return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-[linear-gradient(135deg,#001122_0%,#002244_25%,#003366_50%,#004488_75%,#0055aa_100%)]">
+    <div className="fixed inset-0 z-50 flex touch-none items-center justify-center overflow-hidden overscroll-none bg-[linear-gradient(135deg,#001122_0%,#002244_25%,#003366_50%,#004488_75%,#0055aa_100%)]">
       <div className="intro-orb-a pointer-events-none absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-brand-blue/30 blur-3xl" />
       <div className="intro-orb-b pointer-events-none absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-brand-blue-dark/50 blur-3xl" />
       <div className="intro-dot-grid pointer-events-none absolute inset-0 opacity-40" />
